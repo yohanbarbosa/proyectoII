@@ -6,6 +6,13 @@ import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/Register'
 import POSPage from './pages/sales/POSPage'
 import StorePage from './pages/store/StorePage'
+import Categoria from './pages/categorias/index'
+import Cliente from './pages/clientes/index'
+import Compra from './pages/compras/index'
+import Producto from './pages/productos/index'
+import Proveedor from './pages/proveedores/index'
+import Venta from './pages/ventas/index'
+import Dashboard from './pages/Dashboard'
 
 function PrivateRoute({ children }: { children: ReactNode }){
   const { user, loading } = useAuth()
@@ -26,7 +33,17 @@ function AppRoutes() {
       <Route path="/" element={<Navigate to={user ? "/pos" : "/login"} />} />
       <Route path='/store' element={<StorePage/>}/>
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<RegisterPage />} />
+      <Route path="/categorias" element={<Categoria/>} />
+      <Route path="/clientes" element={<Cliente/>} />
+      <Route path="/compras" element={<Compra/>} />
+      <Route path="/productos" element={<Producto/>} />
+      <Route path="/proveedores" element={<Proveedor/>} />
+      <Route path="/ventas" element={<Venta/>} />
+      <Route path="/dashboard" element={<Dashboard/>} />
+
+
+      
 
       <Route
         path="/pos"
