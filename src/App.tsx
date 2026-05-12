@@ -41,6 +41,8 @@ function AppRoutes() {
       <Route path="/proveedores" element={<Proveedor/>} />
       <Route path="/ventas" element={<Venta/>} />
       <Route path="/dashboard" element={<Dashboard/>} />
+      <Route path="/registrarse" element={<RegisterPage/>} />
+
 
 
       

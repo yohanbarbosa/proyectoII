@@ -19,6 +19,7 @@ export interface Producto {
   stock_minimo: number
   ubicacion?: string
   categorias?: Categoria
+  url_img?:string
 }
 
 export interface Cliente {
@@ -42,7 +43,7 @@ export interface DetalleVenta {
 export interface Venta {
   id_venta?: number
   cliente_id?: number | null
-  fecha?: string
+  fecha?: Date
   total: number
   metodo_pago: string
   clientes?: Cliente

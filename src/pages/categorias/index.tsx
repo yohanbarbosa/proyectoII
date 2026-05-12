@@ -1,18 +1,18 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
-import type { Categoria } from '../../types/database'
+import type { Categoria } from '../../types/index'
 import {
   Button, Modal, Field, Input, Textarea, Alert, Loading, Empty,
   Table, Th, Td, Tag, PageHeader, Badge
 } from '../../components/ui'
-
+import AppLayout from '../../layouts/AppLayout'
 export default function CategoriasModule() {
-  const [rows, setRows] = useState<Categoria[]>([])
+  const [rows, setRows]       = useState<Categoria[]>([])
   const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
-  const [modal, setModal] = useState(false)
+  const [search, setSearch]   = useState('')
+  const [modal, setModal]     = useState(false)
   const [editing, setEditing] = useState<Partial<Categoria>>({})
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError]     = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
 
   const load = useCallback(async () => {
@@ -25,7 +25,7 @@ export default function CategoriasModule() {
 
   useEffect(() => { load() }, [load])
 
-  const openNew = () => { setEditing({}); setError(null); setModal(true) }
+  const openNew  = () => { setEditing({});    setError(null); setModal(true) }
   const openEdit = (r: Categoria) => { setEditing({ ...r }); setError(null); setModal(true) }
   const closeModal = () => { setModal(false); setEditing({}) }
 
@@ -55,22 +55,26 @@ export default function CategoriasModule() {
   }
 
   const filtered = rows.filter(r =>
-    !search || r.nombre.toLowerCase().includes(search.toLowerCase()) ||
+    !search ||
+    r.nombre.toLowerCase().includes(search.toLowerCase()) ||
     (r.descripcion || '').toLowerCase().includes(search.toLowerCase())
   )
 
   return (
-    <div>
+    <AppLayout>
+  <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
       <PageHeader
         title="Categorías"
         description="Clasificación de productos del inventario"
         actions={<Button variant="primary" onClick={openNew}>+ Nueva categoría</Button>}
       />
+
       <div className="px-7 pb-7">
         {error && !modal && <Alert type="error" message={error} />}
         {success && <Alert type="success" message={success} />}
 
-        <div className="flex gap-2 mb-4">
+        {/* Buscador + contador */}
+        <div className="flex items-center gap-3 mb-4">
           <Input
             placeholder="Buscar categorías..."
             value={search}
@@ -80,11 +84,12 @@ export default function CategoriasModule() {
           <Badge color="gray">{filtered.length} registros</Badge>
         </div>
 
-        <div className="bg-gray-900 border border-gray-800 rounded-lg">
+        {/* Tabla */}
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-lg">
           {loading ? <Loading /> : (
             <Table>
               <thead>
-                <tr>
+                <tr className="border-b border-zinc-800">
                   <Th>#</Th>
                   <Th>Nombre</Th>
                   <Th>Descripción</Th>
@@ -96,12 +101,12 @@ export default function CategoriasModule() {
                   <tr><td colSpan={4}><Empty icon="◈" text="Sin categorías registradas" /></td></tr>
                 )}
                 {filtered.map(r => (
-                  <tr key={r.id_categoria} className="hover:bg-white/[0.02]">
+                  <tr key={r.id_categoria} className="border-b border-zinc-800/50 hover:bg-white/[0.02] transition-colors">
                     <Td><Tag>{r.id_categoria}</Tag></Td>
-                    <Td className="text-white font-medium">{r.nombre}</Td>
-                    <Td>{r.descripcion || <span className="text-gray-600">—</span>}</Td>
+                    <Td className="text-white font-semibold">{r.nombre}</Td>
+                    <Td>{r.descripcion || <span className="text-zinc-600">—</span>}</Td>
                     <Td>
-                      <div className="flex justify-end gap-1">
+                      <div className="flex justify-end gap-1.5">
                         <Button size="sm" onClick={() => openEdit(r)}>Editar</Button>
                         <Button size="sm" variant="danger" onClick={() => remove(r.id_categoria)}>Eliminar</Button>
                       </div>
@@ -115,14 +120,17 @@ export default function CategoriasModule() {
       </div>
 
       {modal && (
-        <Modal title={`◈ ${editing.id_categoria ? 'Editar' : 'Nueva'} Categoría`} onClose={closeModal}>
+        <Modal
+          title={`${editing.id_categoria ? 'Editar' : 'Nueva'} Categoría`}
+          onClose={closeModal}
+        >
           {error && <Alert type="error" message={error} />}
           <div className="flex flex-col gap-4">
             <Field label="Nombre *">
               <Input
                 value={editing.nombre || ''}
                 onChange={e => setEditing(p => ({ ...p, nombre: e.target.value }))}
-                placeholder="Ej: Electrónica"
+                placeholder="Ej: Filtros de aceite"
               />
             </Field>
             <Field label="Descripción">
@@ -133,12 +141,14 @@ export default function CategoriasModule() {
               />
             </Field>
           </div>
-          <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-gray-800">
+          <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-zinc-800">
             <Button onClick={closeModal}>Cancelar</Button>
             <Button variant="primary" onClick={save}>Guardar</Button>
           </div>
         </Modal>
       )}
     </div>
+    </AppLayout>
+  
   )
 }

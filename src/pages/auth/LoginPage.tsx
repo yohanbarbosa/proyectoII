@@ -17,10 +17,16 @@ export default function LoginPage() {
     setError('')
     setLoading(true)
     const { error } = await signIn(email, password)
-    if (error) setError('Credenciales inválidas. Verifica tu correo y contraseña.')
+    if (error){
+      setError('Credenciales inválidas. Verifica tu correo y contraseña.')
+      setLoading(false)
+      return
+    }
+    navigate("/dashboard")
     setLoading(false)
   }
 
+  console.log("details of the error : ", error)
   return (
     <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4"
       style={{ fontFamily: "'DM Sans', sans-serif" }}>
@@ -113,7 +119,7 @@ export default function LoginPage() {
 
         <p className="text-center text-zinc-500 text-sm mt-6">
           ¿Necesitas una cuenta?{' '}
-          <button onClick={()=>navigate('/register')} className="text-amber-400 hover:text-amber-300 font-semibold transition-colors">
+          <button onClick={()=>navigate('/registrarse')} className="text-amber-400 hover:text-amber-300 font-semibold transition-colors">
             Registrarse
           </button>
         </p>

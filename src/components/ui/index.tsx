@@ -1,170 +1,233 @@
-import React from 'react'
+// components/ui/index.tsx
+import type { ReactNode, InputHTMLAttributes, TextareaHTMLAttributes } from 'react'
 
-// ── Button ──────────────────────────────────────────────
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'primary' | 'danger' | 'ghost'
-  size?: 'sm' | 'md'
+/* ── Button ─────────────────────────────────────────────── */
+type BtnVariant = 'primary' | 'default' | 'danger'
+type BtnSize    = 'sm' | 'md'
+
+const btnBase = "inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus:outline-none"
+
+const btnVariants: Record<BtnVariant, string> = {
+  primary: "bg-amber-500 hover:bg-amber-400 text-zinc-950",
+  default: "bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300 hover:text-white",
+  danger:  "bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 hover:text-red-300",
 }
-export function Button({ variant = 'default', size = 'md', className = '', children, ...props }: ButtonProps) {
-  const base = 'inline-flex items-center gap-1.5 rounded-md font-mono transition-all disabled:opacity-40 disabled:cursor-not-allowed'
-  const sizes = { sm: 'px-2 py-1 text-[11px]', md: 'px-3 py-1.5 text-xs' }
-  const variants = {
-    default: 'bg-gray-800 border border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-white',
-    primary: 'bg-blue-600 border border-blue-600 text-white hover:bg-blue-700',
-    danger:  'bg-red-950/30 border border-red-700 text-red-400 hover:bg-red-900/40',
-    ghost:   'bg-transparent border border-transparent text-gray-400 hover:text-white hover:bg-gray-800',
-  }
+
+const btnSizes: Record<BtnSize, string> = {
+  sm: "text-xs px-3 py-1.5",
+  md: "text-sm px-4 py-2.5",
+}
+
+export function Button({
+  children, onClick, variant = 'default', size = 'md', disabled = false,
+}: {
+  children: ReactNode; onClick?: () => void
+  variant?: BtnVariant; size?: BtnSize; disabled?: boolean
+}) {
   return (
-    <button className={`${base} ${sizes[size]} ${variants[variant]} ${className}`} {...props}>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`${btnBase} ${btnVariants[variant]} ${btnSizes[size]} disabled:opacity-50 disabled:cursor-not-allowed`}
+    >
       {children}
     </button>
   )
 }
 
-// ── Badge ───────────────────────────────────────────────
-interface BadgeProps { children: React.ReactNode; color?: 'green' | 'red' | 'amber' | 'blue' | 'purple' | 'gray' }
-export function Badge({ children, color = 'gray' }: BadgeProps) {
-  const colors = {
-    green:  'bg-emerald-950/40 text-emerald-400 border border-emerald-800/40',
-    red:    'bg-red-950/40 text-red-400 border border-red-800/40',
-    amber:  'bg-amber-950/40 text-amber-400 border border-amber-800/40',
-    blue:   'bg-blue-950/40 text-blue-400 border border-blue-800/40',
-    purple: 'bg-purple-950/40 text-purple-400 border border-purple-800/40',
-    gray:   'bg-gray-800 text-gray-400 border border-gray-700',
-  }
-  return <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium ${colors[color]}`}>{children}</span>
-}
-
-// ── Modal ───────────────────────────────────────────────
-interface ModalProps { title: string; onClose: () => void; children: React.ReactNode; wide?: boolean }
-export function Modal({ title, onClose, children, wide }: ModalProps) {
+/* ── Input ──────────────────────────────────────────────── */
+export function Input({ className = '', ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className={`bg-gray-900 border border-gray-700 rounded-xl shadow-2xl overflow-y-auto max-h-[88vh] ${wide ? 'w-full max-w-2xl' : 'w-full max-w-lg'}`}>
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
-          <h2 className="text-sm font-bold text-white font-mono">{title}</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-white text-lg leading-none">×</button>
-        </div>
-        <div className="p-6">{children}</div>
-      </div>
-    </div>
+    <input
+      {...props}
+      className={`w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm
+        placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1
+        focus:ring-amber-500/50 transition-all ${className}`}
+    />
   )
 }
 
-// ── Field ───────────────────────────────────────────────
-interface FieldProps { label: string; children: React.ReactNode; className?: string }
-export function Field({ label, children, className = '' }: FieldProps) {
+/* ── Textarea ───────────────────────────────────────────── */
+export function Textarea({ className = '', ...props }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
-    <div className={`flex flex-col gap-1.5 ${className}`}>
-      <label className="text-[10px] uppercase tracking-widest text-gray-500">{label}</label>
+    <textarea
+      {...props}
+      rows={3}
+      className={`w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm
+        placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1
+        focus:ring-amber-500/50 transition-all resize-none ${className}`}
+    />
+  )
+}
+
+/* ── Field ──────────────────────────────────────────────── */
+export function Field({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{label}</label>
       {children}
     </div>
   )
 }
 
-// ── Input / Textarea / Select ────────────────────────────
-const inputBase = 'bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-xs text-gray-100 font-mono outline-none focus:border-blue-500 transition-colors w-full placeholder:text-gray-600'
-export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
-  return <input className={inputBase} {...props} />
-}
-export function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea className={`${inputBase} min-h-[72px] resize-y`} {...props} />
-}
-export function Select(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
+/* ── Alert ──────────────────────────────────────────────── */
+export function Alert({ type, message }: { type: 'error' | 'success'; message: string }) {
+  const styles = {
+    error:   "bg-red-500/10 border-red-500/30 text-red-400",
+    success: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400",
+  }
+  const icons = {
+    error:   "M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+    success: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+  }
   return (
-    <select className={`${inputBase} cursor-pointer`} {...props}>
-      {props.children}
-    </select>
+    <div className={`flex items-center gap-2 border rounded-xl px-4 py-3 mb-4 text-sm ${styles[type]}`}>
+      <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d={icons[type]} />
+      </svg>
+      {message}
+    </div>
   )
 }
 
-// ── Alert ────────────────────────────────────────────────
-interface AlertProps { type: 'error' | 'success'; message: string }
-export function Alert({ type, message }: AlertProps) {
-  const styles = {
-    error:   'bg-red-950/30 border-red-800/40 text-red-400',
-    success: 'bg-emerald-950/30 border-emerald-800/40 text-emerald-400',
-  }
-  return <div className={`border rounded-md px-4 py-2.5 text-xs font-mono mb-4 ${styles[type]}`}>{message}</div>
-}
-
-// ── Loading ──────────────────────────────────────────────
+/* ── Loading ────────────────────────────────────────────── */
 export function Loading() {
   return (
-    <div className="flex items-center justify-center py-14 text-gray-500 gap-3 text-xs">
-      <div className="w-4 h-4 border-2 border-gray-700 border-t-blue-500 rounded-full animate-spin" />
-      Cargando...
+    <div className="flex items-center justify-center py-16 gap-3">
+      <svg className="w-5 h-5 text-amber-500 animate-spin" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+      </svg>
+      <span className="text-zinc-500 text-sm">Cargando...</span>
     </div>
   )
 }
 
-// ── Empty ────────────────────────────────────────────────
+/* ── Empty ──────────────────────────────────────────────── */
 export function Empty({ icon, text }: { icon: string; text: string }) {
   return (
-    <div className="text-center py-14 text-gray-500">
-      <div className="text-3xl mb-2">{icon}</div>
-      <div className="text-xs">{text}</div>
+    <div className="flex flex-col items-center justify-center py-16 gap-3">
+      <span className="text-4xl opacity-20">{icon}</span>
+      <p className="text-zinc-500 text-sm">{text}</p>
     </div>
   )
 }
 
-// ── Table ────────────────────────────────────────────────
-export function Table({ children }: { children: React.ReactNode }) {
+/* ── Table / Th / Td ────────────────────────────────────── */
+export function Table({ children }: { children: ReactNode }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse">{children}</table>
-    </div>
+    <table className="w-full text-sm">{children}</table>
   )
 }
-export function Th({ children, right }: { children: React.ReactNode; right?: boolean }) {
+
+export function Th({ children, right }: { children?: ReactNode; right?: boolean }) {
   return (
-    <th className={`px-4 py-2.5 text-[10px] uppercase tracking-widest text-gray-500 border-b border-gray-800 font-medium ${right ? 'text-right' : 'text-left'}`}>
+    <th className={`px-4 py-3 text-xs font-semibold text-zinc-500 uppercase tracking-wider bg-zinc-800/50
+      ${right ? 'text-right' : 'text-left'}`}>
       {children}
     </th>
   )
 }
-export function Td({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+
+export function Td({ children, className = '', right }: { children: ReactNode; className?: string; right?: boolean }) {
   return (
-    <td className={`px-4 py-2.5 border-b border-gray-800/50 text-gray-400 text-xs align-middle ${className}`}>
+    <td className={`px-4 py-3 text-zinc-400 ${right ? 'text-right' : ''} ${className}`}>
       {children}
     </td>
   )
 }
 
-// ── Tag (ID pill) ────────────────────────────────────────
-export function Tag({ children }: { children: React.ReactNode }) {
-  return <span className="bg-gray-800 border border-gray-700 rounded px-2 py-0.5 text-[10px] text-gray-500 font-mono">{children}</span>
+/* ── Tag ────────────────────────────────────────────────── */
+export function Tag({ children }: { children: ReactNode }) {
+  return (
+    <span className="bg-zinc-800 border border-zinc-700 text-zinc-400 text-xs font-semibold px-2 py-0.5 rounded-lg">
+      {children}
+    </span>
+  )
 }
 
-// ── Page header ──────────────────────────────────────────
-interface PageHeaderProps { title: string; description?: string; actions?: React.ReactNode }
-export function PageHeader({ title, description, actions }: PageHeaderProps) {
+/* ── Badge (actualizado con colores) ────────────────────── */
+export function Badge({ children, color }: { children: ReactNode; color?: 'red' | 'green' | 'amber' | 'gray' }) {
+  const colors = {
+    red:   "bg-red-500/10 border-red-500/30 text-red-400",
+    green: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400",
+    amber: "bg-amber-500/10 border-amber-500/30 text-amber-400",
+    gray:  "bg-zinc-800 border-zinc-700 text-zinc-400",
+  }
+  const style = colors[color ?? 'gray']
   return (
-    <div className="px-7 pt-6 pb-4 border-b border-gray-800 mb-6">
-      <div className="text-lg font-bold text-white font-mono">{title}</div>
-      {description && <div className="text-[11px] text-gray-500 mt-0.5 mb-3">{description}</div>}
-      {actions && <div className="flex gap-2">{actions}</div>}
+    <span className={`border text-xs font-semibold px-2.5 py-1 rounded-lg ${style}`}>
+      {children}
+    </span>
+  )
+}
+
+/* ── PageHeader ─────────────────────────────────────────── */
+export function PageHeader({
+  title, description, actions,
+}: {
+  title: string; description?: string; actions?: ReactNode
+}) {
+  return (
+    <div className="flex items-center justify-between px-7 py-5 border-b border-zinc-800 mb-6">
+      <div>
+        <h1 className="text-xl font-bold text-white tracking-tight">{title}</h1>
+        {description && <p className="text-zinc-500 text-sm mt-0.5">{description}</p>}
+      </div>
+      {actions && <div>{actions}</div>}
     </div>
   )
 }
 
-// ── Read-only banner ─────────────────────────────────────
-export function ReadOnlyBanner() {
+/* ── Modal ──────────────────────────────────────────────── */
+export function Modal({
+  title, children, onClose,
+}: {
+  title: string; children: ReactNode; onClose: () => void
+}) {
   return (
-    <div className="bg-emerald-950/20 border border-emerald-900/30 rounded-md px-4 py-2 text-[11px] text-emerald-500 flex items-center gap-2 mb-4">
-      🔒 Módulo de solo lectura — las ventas se registran desde el punto de venta
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      {/* Card */}
+      <div className="relative bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl w-full max-w-md p-6"
+        style={{ fontFamily: "'DM Sans', sans-serif" }}>
+        {/* Header */}
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-base font-bold text-white tracking-tight">{title}</h2>
+          <button
+            onClick={onClose}
+            className="w-7 h-7 flex items-center justify-center rounded-lg bg-zinc-800 hover:bg-zinc-700
+              text-zinc-400 hover:text-white transition-all"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        {children}
+      </div>
     </div>
   )
 }
 
-// ── Stat card ────────────────────────────────────────────
-interface StatCardProps { label: string; value: string | number; sub?: string; valueClass?: string }
-export function StatCard({ label, value, sub, valueClass = 'text-white' }: StatCardProps) {
+
+/* ── Select ─────────────────────────────────────────────── */
+import type { SelectHTMLAttributes } from 'react'
+
+export function Select({ className = '', children, ...props }: SelectHTMLAttributes<HTMLSelectElement>) {
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
-      <div className="text-[10px] uppercase tracking-widest text-gray-500 mb-1.5">{label}</div>
-      <div className={`text-2xl font-bold font-mono ${valueClass}`}>{value}</div>
-      {sub && <div className="text-[10px] text-gray-600 mt-1">{sub}</div>}
-    </div>
+    <select
+      {...props}
+      className={`w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm
+        focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50
+        transition-all appearance-none cursor-pointer ${className}`}
+    >
+      {children}
+    </select>
   )
 }
+
