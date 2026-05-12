@@ -17,16 +17,17 @@ export default function LoginPage() {
     setError('')
     setLoading(true)
     const { error } = await signIn(email, password)
-    if (error){
-      setError('Credenciales inválidas. Verifica tu correo y contraseña.')
-      setLoading(false)
-      return
-    }
+    if (error) {
+    console.log(error)
+    setError(error.message)
+    setLoading(false)
+    return
+  }
     navigate("/dashboard")
     setLoading(false)
+    console.log("details of the error : ", error)
   }
 
-  console.log("details of the error : ", error)
   return (
     <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4"
       style={{ fontFamily: "'DM Sans', sans-serif" }}>

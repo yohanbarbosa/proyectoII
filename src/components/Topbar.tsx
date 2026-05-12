@@ -48,7 +48,7 @@ function Topbar() {
         {/* Botón salir */}
         <button
           onClick={logout}
-          className="bg-zinc-800 hover:bg-red-500/10 hover:border-red-500/30 border border-zinc-700
+          className="cursor-pointer bg-zinc-800 hover:bg-red-500/10 hover:border-red-500/30 border border-zinc-700
             text-zinc-400 hover:text-red-400 rounded-xl px-3 py-2 text-xs font-semibold
             transition-all duration-200 flex items-center gap-1.5"
         >
