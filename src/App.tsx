@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import type { ReactNode } from 'react'
+import { useTheme } from './context/ThemeContext'
 
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/Register'
@@ -13,6 +14,16 @@ import Producto from './pages/productos/index'
 import Proveedor from './pages/proveedores/index'
 import Venta from './pages/ventas/index'
 import Dashboard from './pages/Dashboard'
+import DashboardV2 from './pages/DashboardV2'
+
+
+
+const themeClasses = {
+  dark:  "bg-zinc-900 text-white",
+  light: "bg-white text-zinc-900",
+  amber: "bg-amber-50 text-zinc-900",
+};
+
 
 function PrivateRoute({ children }: { children: ReactNode }){
   const { user, loading } = useAuth()
@@ -42,10 +53,7 @@ function AppRoutes() {
       <Route path="/ventas" element={<Venta/>} />
       <Route path="/dashboard" element={<Dashboard/>} />
       <Route path="/registrarse" element={<RegisterPage/>} />
-
-
-
-      
+      <Route path="/dashboard-version2" element={<DashboardV2/>} />
 
       <Route
         path="/pos"
@@ -60,6 +68,7 @@ function AppRoutes() {
 }
 
 export default function App() {
+  const {theme} = useTheme();
   return (
     <AuthProvider>
       <BrowserRouter>

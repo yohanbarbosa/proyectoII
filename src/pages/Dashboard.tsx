@@ -80,7 +80,7 @@ export default function Dashboard() {
           <>
             {/* ── Stat Cards ── */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-              {STAT_CARDS(stats).map(({ label, value, sub, icon, valueClass }) => (
+              {STAT_CARDS(stats).map(({ label, value, sub, valueClass }) => (
                 <div
                   key={label}
                   className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col gap-3 shadow-lg"

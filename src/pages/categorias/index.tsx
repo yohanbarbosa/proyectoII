@@ -40,8 +40,10 @@ export default function CategoriasModule() {
     const { error } = editing.id_categoria
       ? await supabase.from('categorias').update(payload).eq('id_categoria', editing.id_categoria)
       : await supabase.from('categorias').insert(payload)
-    if (error) { setError(error.message); return }
+    if (error) { 
+      setError(error.message); return }
     closeModal()
+    console.log("data : ", payload )
     notify(editing.id_categoria ? 'Categoría actualizada.' : 'Categoría creada.')
     load()
   }

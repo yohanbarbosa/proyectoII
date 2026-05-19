@@ -15,22 +15,23 @@ function Topbar() {
 
   return (
     <header
-      className="bg-zinc-900 border-b border-zinc-800 px-6 py-3 flex items-center justify-between shrink-0"
+      className="bg-(--color-bg-primary) border-b border-r border-(--color-border) px-6 py-3 flex items-center justify-between shrink-0"
       style={{ fontFamily: "'DM Sans', sans-serif" }}
     >
       {/* Lado izquierdo: título de página o bienvenida */}
       <div>
-        <p className="text-white font-bold text-sm tracking-tight">Panel de gestión</p>
+        <p className=" text-(--color-text-primary) font-bold text-sm tracking-tight">
+          Panel de gestión
+        </p>
         <p className="text-zinc-500 text-xs">Sistema de Gestión Comercial</p>
       </div>
 
       {/* Lado derecho: usuario + botón salir */}
       <div className="flex items-center gap-3">
-
         {/* Info usuario */}
         <div className="hidden sm:flex items-center gap-3">
           <div className="text-right">
-            <p className="text-white text-xs font-semibold">{user?.email}</p>
+            <p className="text-(--color-text-primary) text-xs font-semibold">{user?.email}</p>
             <p className="text-zinc-500 text-xs">Administrador</p>
           </div>
 
@@ -48,11 +49,16 @@ function Topbar() {
         {/* Botón salir */}
         <button
           onClick={logout}
-          className="cursor-pointer bg-zinc-800 hover:bg-red-500/10 hover:border-red-500/30 border border-zinc-700
-            text-zinc-400 hover:text-red-400 rounded-xl px-3 py-2 text-xs font-semibold
+          className="cursor-pointer bg-(--color-button) hover:bg-red-500/10 hover:border-red-500/30 border border-zinc-700
+            text-(--color-text-secondary) hover:text-red-400 rounded-xl px-3 py-2 text-xs font-semibold
             transition-all duration-200 flex items-center gap-1.5"
         >
-          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg
+            className="w-3.5 h-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"

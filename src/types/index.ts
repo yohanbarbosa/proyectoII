@@ -65,3 +65,15 @@ export interface AuthUser {
   email: string
   role?: string
 }
+
+// ____Stats Types_____________________________________________________
+export interface Stats {
+  productos: number;
+  categorias: number;
+  proveedores: number;
+  clientes: number;
+  totalCompras: number;
+  totalVentas: number;
+  stockBajo: number;
+  utilidad: number;
+}
