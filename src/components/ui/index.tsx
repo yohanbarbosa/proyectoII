@@ -9,7 +9,7 @@ const btnBase = "inline-flex items-center justify-center font-semibold rounded-x
 
 const btnVariants: Record<BtnVariant, string> = {
   primary: "bg-amber-500 hover:bg-amber-400 text-zinc-950",
-  default: "bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300 hover:text-white",
+  default: "bg-(--color-button) hover:bg-zinc-700 border border-zinc-700 text-(--color-text-primary) hover:text-white",
   danger:  "bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 hover:text-red-300",
 }
 
@@ -40,7 +40,7 @@ export function Input({ className = '', ...props }: InputHTMLAttributes<HTMLInpu
   return (
     <input
       {...props}
-      className={`w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm
+      className={`w-full bg-(--color-bg-primary) border border-zinc-700 rounded-xl px-4 py-2.5 text-(--color-text-primary) text-sm
         placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1
         focus:ring-amber-500/50 transition-all ${className}`}
     />
@@ -53,7 +53,7 @@ export function Textarea({ className = '', ...props }: TextareaHTMLAttributes<HT
     <textarea
       {...props}
       rows={3}
-      className={`w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm
+      className={`w-full bg-(--color-bg-secondary) border border-zinc-700 rounded-xl px-4 py-2.5 text-(--color-text-primary) text-sm
         placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1
         focus:ring-amber-500/50 transition-all resize-none ${className}`}
     />
@@ -122,7 +122,7 @@ export function Table({ children }: { children: ReactNode }) {
 
 export function Th({ children, right }: { children?: ReactNode; right?: boolean }) {
   return (
-    <th className={`px-4 py-3 text-xs font-semibold text-zinc-500 uppercase tracking-wider bg-zinc-800/50
+    <th className={`px-4 py-3 text-xs font-semibold text-zinc-500 uppercase tracking-wider bg-(--color-bg-primary)
       ${right ? 'text-right' : 'text-left'}`}>
       {children}
     </th>
@@ -131,7 +131,7 @@ export function Th({ children, right }: { children?: ReactNode; right?: boolean 
 
 export function Td({ children, className = '', right }: { children: ReactNode; className?: string; right?: boolean }) {
   return (
-    <td className={`px-4 py-3 text-zinc-400 ${right ? 'text-right' : ''} ${className}`}>
+    <td className={`px-4 py-3 text-(--color-text-primary) ${right ? 'text-right' : ''} ${className}`}>
       {children}
     </td>
   )
@@ -140,7 +140,7 @@ export function Td({ children, className = '', right }: { children: ReactNode; c
 /* ── Tag ────────────────────────────────────────────────── */
 export function Tag({ children }: { children: ReactNode }) {
   return (
-    <span className="bg-zinc-800 border border-zinc-700 text-zinc-400 text-xs font-semibold px-2 py-0.5 rounded-lg">
+    <span className="bg-(--color-bg-secondary) border border-zinc-700 text-zinc-400 text-xs font-semibold px-2 py-0.5 rounded-lg">
       {children}
     </span>
   )
@@ -171,7 +171,7 @@ export function PageHeader({
   return (
     <div className="flex items-center justify-between px-7 py-5 border-b border-zinc-800 mb-6">
       <div>
-        <h1 className="text-xl font-bold text-white tracking-tight">{title}</h1>
+        <h1 className="text-xl font-bold text-(--color-text-secondary) tracking-tight">{title}</h1>
         {description && <p className="text-zinc-500 text-sm mt-0.5">{description}</p>}
       </div>
       {actions && <div>{actions}</div>}
@@ -181,9 +181,12 @@ export function PageHeader({
 
 /* ── Modal ──────────────────────────────────────────────── */
 export function Modal({
-  title, children, onClose,
+  title, children, onClose, wide = false,
 }: {
-  title: string; children: ReactNode; onClose: () => void
+  title: string;
+  children: ReactNode;
+  onClose: () => void;
+  wide?: boolean;
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -193,8 +196,11 @@ export function Modal({
         onClick={onClose}
       />
       {/* Card */}
-      <div className="relative bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl w-full max-w-md p-6"
-        style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      <div
+        className={`relative bg-(--color-bg-primary) border border-zinc-800 rounded-2xl shadow-2xl w-full p-6
+          ${wide ? "max-w-3xl" : "max-w-md"}`}
+        style={{ fontFamily: "'DM Sans', sans-serif" }}
+      >
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-bold text-white tracking-tight">{title}</h2>
@@ -211,7 +217,7 @@ export function Modal({
         {children}
       </div>
     </div>
-  )
+  );
 }
 
 
@@ -222,7 +228,7 @@ export function Select({ className = '', children, ...props }: SelectHTMLAttribu
   return (
     <select
       {...props}
-      className={`w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm
+      className={`w-full bg-(--color-bg-secondary) border border-zinc-700 rounded-xl px-4 py-2.5 text-(--color-text-secondary) text-sm
         focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50
         transition-all appearance-none cursor-pointer ${className}`}
     >

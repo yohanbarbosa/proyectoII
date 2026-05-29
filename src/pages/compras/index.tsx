@@ -110,7 +110,7 @@ export default function ComprasModule() {
         {success && <Alert type="success" message={success} />}
 
         {/* ── Tabla principal ── */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-lg">
+        <div className="bg-(--color-bg-primary) border border-zinc-800 rounded-2xl overflow-hidden shadow-lg">
           {loading ? <Loading /> : (
             <Table>
               <thead>
@@ -132,11 +132,11 @@ export default function ComprasModule() {
                     <tr
                       key={r.id_compra}
                       onClick={() => toggleExpand(r.id_compra)}
-                      className="border-b border-zinc-800/50 hover:bg-white/[0.02] cursor-pointer transition-colors group"
+                      className="border-b border-zinc-800/50 hover:bg-(--color-bg-hover) cursor-pointer transition-colors group"
                     >
                       <Td><Tag>{r.id_compra}</Tag></Td>
 
-                      <Td className="text-white font-semibold">
+                      <Td className="font-semibold">
                         {r.proveedores?.nombre || <span className="text-zinc-600">—</span>}
                       </Td>
 
@@ -172,7 +172,7 @@ export default function ComprasModule() {
 
                     {/* ── Fila expandida ── */}
                     {expanded[r.id_compra] !== undefined && (
-                      <tr key={`detail-${r.id_compra}`} className="bg-zinc-950/60 border-b border-zinc-800/50">
+                      <tr key={`detail-${r.id_compra}`} className="bg-(--color-bg-secondary) border-b border-zinc-800/50">
                         <td colSpan={5} className="px-6 py-4">
                           {expanded[r.id_compra] === null ? (
                             <div className="flex items-center gap-2 text-zinc-500 text-xs">
@@ -196,8 +196,8 @@ export default function ComprasModule() {
                               <tbody>
                                 {expanded[r.id_compra]!.map(d => (
                                   <tr key={d.id_detalle} className="border-b border-zinc-800/30 last:border-0">
-                                    <td className="py-2 pr-6 text-sm text-white font-medium">
-                                      {d.productos?.nombre || <span className="text-zinc-600">—</span>}
+                                    <td className="py-2 pr-6 text-sm text-(--color-text-primary) font-medium">
+                                      {d.productos?.nombre || <span className="text-(--color-text-secondary)">—</span>}
                                     </td>
                                     <td className="py-2 pr-6 text-sm text-zinc-400">{d.cantidad}</td>
                                     <td className="py-2 pr-6 text-sm text-amber-400">${fmt(d.precio_compra)}</td>

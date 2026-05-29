@@ -25,6 +25,8 @@ function Sidebar() {
     { path: "/categorias",  icon: "mdi:file-report-outline",    label: "Categorías" },
     { path: "/compras",     icon: "mdi:cart-sale",              label: "Compras" },
     { path: "/proveedores", icon: "mdi:account-supervisor",     label: "Proveedor" },
+    { path: "/pedidos", icon: "mdi:account-supervisor",     label: "Pedidos" },
+
   ];
 
   return (
@@ -68,9 +70,7 @@ function Sidebar() {
           </li>
         ))}
 
-        <li className="text-(--color-text-secondary)">
-          <MenuItems items={["All Orders", "Returns", "Order Tracking"]} />
-        </li>
+
       </ul>
 
       {/* Footer */}
@@ -106,7 +106,7 @@ function Sidebar() {
         </div>
 
         <p className="text-(--color-text-secondary) text-xs text-center">
-          © 2025 AutoPartes Pro
+          © 2025 AutoPartes JDM
         </p>
       </div>
     </div>

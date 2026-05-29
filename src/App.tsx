@@ -15,14 +15,11 @@ import Proveedor from './pages/proveedores/index'
 import Venta from './pages/ventas/index'
 import Dashboard from './pages/Dashboard'
 import DashboardV2 from './pages/DashboardV2'
+import Pedidos from './pages/pedidos'
 
 
 
-const themeClasses = {
-  dark:  "bg-zinc-900 text-white",
-  light: "bg-white text-zinc-900",
-  amber: "bg-amber-50 text-zinc-900",
-};
+
 
 
 function PrivateRoute({ children }: { children: ReactNode }){
@@ -51,9 +48,11 @@ function AppRoutes() {
       <Route path="/productos" element={<Producto/>} />
       <Route path="/proveedores" element={<Proveedor/>} />
       <Route path="/ventas" element={<Venta/>} />
-      <Route path="/dashboard" element={<Dashboard/>} />
+      <Route path="/dashboard" element={<DashboardV2/>} />
       <Route path="/registrarse" element={<RegisterPage/>} />
-      <Route path="/dashboard-version2" element={<DashboardV2/>} />
+      <Route path="/dashboard-version1" element={<Dashboard/>} />
+      <Route path="/pedidos" element={<Pedidos/>} />
+
 
       <Route
         path="/pos"

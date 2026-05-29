@@ -111,7 +111,7 @@ export function ContactModule({ table, pk, title, icon, singular }: ContactModul
         </div>
 
         {/* Tabla */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-lg">
+        <div className="bg-(--color-bg-primary) border border-zinc-800 rounded-2xl overflow-hidden shadow-lg">
           {loading ? <Loading /> : (
             <Table>
               <thead>
@@ -135,7 +135,7 @@ export function ContactModule({ table, pk, title, icon, singular }: ContactModul
                 {filtered.map(r => (
                   <tr
                     key={r[pk] as number}
-                    className="border-b border-zinc-800/50 hover:bg-white/[0.02] transition-colors"
+                    className="border-b border-zinc-800/50 hover:bg-(--color-bg-hover) transition-colors"
                   >
                     <Td><Tag>{r[pk] as number}</Tag></Td>
 
@@ -148,13 +148,13 @@ export function ContactModule({ table, pk, title, icon, singular }: ContactModul
                             {r.nombre.charAt(0).toUpperCase()}
                           </span>
                         </div>
-                        <span className="text-white font-semibold">{r.nombre}</span>
+                        <span className="text-(--color-text-primary) font-semibold">{r.nombre}</span>
                       </div>
                     </Td>
 
                     <Td>
                       {r.telefono
-                        ? <span className="text-zinc-300">{r.telefono}</span>
+                        ? <span className="text-(--color-text-secondary)">{r.telefono}</span>
                         : <span className="text-zinc-600">—</span>}
                     </Td>
 
@@ -198,7 +198,7 @@ export function ContactModule({ table, pk, title, icon, singular }: ContactModul
         >
           {error && <Alert type="error" message={error} />}
           <div className="grid grid-cols-2 gap-4">
-            <Field label="Nombre *" className="col-span-2">
+            <Field label="Nombre *">
               <Input
                 value={editing.nombre || ''}
                 onChange={e => set('nombre', e.target.value)}
@@ -220,7 +220,7 @@ export function ContactModule({ table, pk, title, icon, singular }: ContactModul
                 placeholder="correo@ejemplo.com"
               />
             </Field>
-            <Field label="Dirección" className="col-span-2">
+            <Field label="Dirección">
               <Textarea
                 value={editing.direccion || ''}
                 onChange={e => set('direccion', e.target.value)}

@@ -61,8 +61,8 @@ export default function StorePage() {
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
       {/* ── Navbar ─────────────────────────────────────────── */}
-      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-stone-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-4 h-16">
+      <header className=" sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-stone-100 shadow-sm">
+        <div className=" justify-between max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-4 h-16">
 
           {/* Logo — mismo bloque que el admin pero en naranja */}
           <div className="flex items-center gap-2.5 shrink-0">
@@ -72,8 +72,7 @@ export default function StorePage() {
               </svg>
             </div>
             <div className="leading-tight">
-              <span className="text-stone-900 font-bold text-base block leading-none tracking-tight">AutoPartes Pro</span>
-              <span className="text-amber-500 text-[10px] font-semibold uppercase tracking-widest">Tienda en línea</span>
+              <span className="text-stone-900 font-bold text-base block leading-none tracking-tight">AutoPartes JDM</span>
             </div>
           </div>
 
@@ -268,6 +267,10 @@ export default function StorePage() {
           onClose={() => { setCheckoutOpen(false); setCartOpen(true) }}
         />
       )}
+
+      <div className="">
+        hola
+      </div>
     </div>
   )
 }
