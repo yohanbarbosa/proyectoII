@@ -391,7 +391,7 @@ export default function ProductosModule() {
                             </div>
                           )}
                         </Td>
-                        <Td className="text-white font-semibold max-w-[160px] truncate">
+                        <Td className=" font-semibold max-w-40 truncate">
                           {r.nombre}
                         </Td>
                         <Td>
